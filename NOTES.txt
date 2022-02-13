@@ -1,0 +1,64 @@
+
+
+server {
+    listen              80;
+    return 301          https://experimental.nightly.sakaiproject.org$request_uri;
+    server_name         experimental.nightly.sakaiproject.org;
+}
+
+server {
+    listen              443 ssl http2 http2;
+    server_name         experimental.nightly.sakaiproject.org;
+
+    include snippets/errorpages.conf;
+    include snippets/ssl_certificate.conf;
+
+    location ^~ /sakai/sakai.properties {
+        types { }
+        default_type text/plain;
+        alias                   /var/trunk-experimental/sakai/sakai.properties;
+        expires                 24h;
+        proxy_ignore_headers    Cache-Control;
+    }
+
+    location ^~ /logs/ {
+        types { }
+        default_type text/plain;
+        alias                   /var/trunk-experimental/logs/;
+        expires                 24h;
+        proxy_ignore_headers    Cache-Control;
+        access_log              off;
+        autoindex on;
+    }
+
+    location /tail {
+            proxy_pass http://127.0.0.1:25213/tail;
+    }
+
+    location / {
+rewrite                 ^/$             /portal/        last;
+        proxy_pass              http://127.0.0.1:20213;
+        proxy_redirect          off;
+        proxy_set_header        Host             $host;
+        proxy_set_header        X-Real-IP        $remote_addr;
+        proxy_set_header        X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto https;
+add_header              'Strict-Transport-Security' 'max-age=314159265359';
+    }
+
+    # This is to support SAK-44265, proxy_read_timeout increased
+    location ~ /api/users/.+/events {
+        proxy_read_timeout 24h;
+        proxy_pass              http://127.0.0.1:20213;
+        proxy_redirect          off;
+        proxy_set_header        Host             $host;
+        proxy_set_header        X-Real-IP        $remote_addr;
+        proxy_set_header        X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto https;
+add_header              'Strict-Transport-Security' 'max-age=314159265359';
+    }
+
+    ssl_certificate /etc/letsencrypt/live/nightly.sakaiproject.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/nightly.sakaiproject.org/privkey.pem; # managed by Certbot
+}
+
