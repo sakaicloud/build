@@ -17,10 +17,12 @@ FROM sakai_mysql:latest
 COPY sakai-dev-software.sh /usr/local/bin
 COPY sakai-dev-configure.sh /usr/local/bin
 
-RUN bash /usr/local/bin/sakai-base-software.sh
+RUN bash /usr/local/bin/sakai-dev-software.sh
 
 COPY ./www /root/www
 COPY ./phpMyAdmin-5.1.1-all-languages.zip /root/phpMyAdmin-5.1.1-all-languages.zip
+COPY monitor-apache.sh /usr/local/bin/
+COPY apache2.conf /etc/apache2
 
 # Set environment variables.
 ENV HOME /root

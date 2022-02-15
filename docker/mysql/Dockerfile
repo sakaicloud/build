@@ -9,11 +9,11 @@
 
 FROM sakai_base:latest
 
-COPY sakai-mysql-prepare.sh /usr/local/bin
+COPY sakai-mysql-software.sh /usr/local/bin
 COPY sakai-mysql-configure.sh /usr/local/bin
 
 # Install.
-RUN bash /usr/local/bin/sakai-mysql-prepare.sh
+RUN bash /usr/local/bin/sakai-mysql-software.sh
 
 # Set environment variables.
 ENV HOME /root

@@ -27,6 +27,9 @@ with all of the pieces running on one server.
     $ docker attach 73c...e21
     $ docker exec -it sakai_mysql bash
 
+    $ docker run -p 8080:8080 -p 8081:80 -p 3306:3306 --name sakai_dev -dit sakai_dev:latest
+    $ docker exec -it sakai_dev bash
+
 Old:
 
     $ docker run -p 8080:80 -e TSUGI_SERVICENAME=TSFUN -e MYSQL_ROOT_PASSWORD=secret --name ubuntu -dit sakai_dev:latest

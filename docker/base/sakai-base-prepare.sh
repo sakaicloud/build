@@ -5,8 +5,8 @@ echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-sel
 apt-get install -y mailutils
 
 echo ====== Check out build scripts if they are not already there
-if [ ! -d "/root/sakai-build" ]; then
-    git clone https://github.com/sakaicloud/sakai-build.git /root/sakai-build
+if [ ! -d "/root/build" ]; then
+    git clone https://github.com/sakaicloud/build.git /root/build
 fi
 echo ======= Cleanup Start
 df

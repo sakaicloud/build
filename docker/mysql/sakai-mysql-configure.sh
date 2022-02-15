@@ -10,6 +10,9 @@ else
 # Mysql
 # sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
 
+echo Starting mysql
+service mysql start
+
 # Make it so mysql can touch the local file system
 rm /var/log/mysql/error.log
 chmod -R ug+rw /var/lib/mysql
@@ -26,9 +29,6 @@ fi
 # COMPLETE
 fi
 touch $COMPLETE
-
-echo Starting mysql
-service mysql start
 
 echo ""
 if [ "$@" == "return" ] ; then

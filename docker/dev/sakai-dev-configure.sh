@@ -1,4 +1,4 @@
-echo "Running dev Configure"
+echo "Running Dev Configure"
 
 bash /usr/local/bin/sakai-mysql-configure.sh return
 
@@ -26,26 +26,58 @@ mysql -u root --password=$MYSQL_ROOT_PASSWORD << EOF
 EOF
 
 echo "Updating build scripts..."
-cd /root/sakai-build
+cd /root/build
 git pull
 
-bash /root/sakai-build/common/sakai-common-configure.sh
+bash /root/build/common/sakai-common-configure.sh
 
-echo "Installing phpMyAdmin"
-rm -rf /var/www/html/phpMyAdmin
-cd /root
-unzip phpMyAdmin-5.1.1-all-languages.zip
-mv phpMyAdmin-5.1.1-all-languages /var/www/html/phpMyAdmin
-rm phpMyAdmin-5.1.1-all-languages.zip
+# Sanity check in case Docker went wrong with freshly mounted html folder
+if [ -d "/var/www/html" ] ; then
+    echo "Normal case: /var/www/html is a directory";
+else
+    if [ -f "/var/www/html" ]; then
+        echo "OOPS /var/www/html is a file";
+        rm -f /var/www/html
+        mkdir /var/www/html
+        echo "<h1>Test Page</h1>" > /var/www/html/index.html
+    else
+        echo "OOPS /var/www/html is not there";
+        rm -f /var/www/html
+        mkdir /var/www
+        mkdir /var/www/html
+        echo "<h1>Test Base Page</h1>" > /var/www/html/index.html
+    fi
+fi
+
+
+if [ ! -z "$APACHE_SERVER_NAME" ]; then
+cat >> /etc/apache2/sites-available/000-default.conf << EOF
+
+ServerName $APACHE_SERVER_NAME
+
+EOF
+
+fi
+
+echo "NOT Installing phpMyAdmin"
+## echo "Installing phpMyAdmin"
+## rm -rf /var/www/html/phpMyAdmin
+## cd /root
+## unzip phpMyAdmin-5.1.1-all-languages.zip
+## mv phpMyAdmin-5.1.1-all-languages /var/www/html/phpMyAdmin
+## rm phpMyAdmin-5.1.1-all-languages.zip
 
 # if COMPLETE
 fi
 
 touch $COMPLETE
 
+# Starting Apache
+/usr/sbin/apachectl start
+
 echo ""
 if [ "$@" == "return" ] ; then
-  echo "Tsugi Dev Returning..."
+  echo "Dakai Dev Returning..."
   exit
 fi
 

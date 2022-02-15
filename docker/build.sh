@@ -13,8 +13,6 @@ docker rmi $(docker images | grep '^<none>' | awk '{print $3}') > /dev/null 2>&1
 echo "Building images..."
 cd base
 docker build --tag sakai_base .
-cd ../prod
-echo TODO: docker build --tag sakai_prod .
 cd ../mysql
 docker build --tag sakai_mysql .
 cd ../dev
