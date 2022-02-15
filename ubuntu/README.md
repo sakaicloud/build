@@ -1,7 +1,7 @@
-Bringing Tsugi Up on Ubuntu
+Bringing Sakai Up on Ubuntu
 ===========================
 
-This documents how to manually build a Tsugi developer or production server
+This documents how to manually build a Sakai developer or production server
 on an ubuntu 20.04 instance.  You have to decide what kind of instance you
 want:
 
@@ -49,24 +49,24 @@ After you have an Ubuntu and are logged in as root we start with the basics:
 Then check out this build repository:
 
     cd /root
-    git clone https://github.com/tsugiproject/tsugi-build.git
+    git clone https://github.com/sakaicloud/sakai-build.git
 
 If you want a developer/demo instance (fully self-contained):
 
-    cd /root/tsugi-build
+    cd /root/sakai-build
     bash ubuntu/build-dev.sh
 
 If you want a production instance that is dependent on outside resources:
 
-    cd /root/tsugi-build
+    cd /root/sakai-build
     bash ubuntu/build-prod.sh
 
 Once the script completes successfully, all the pre-reqsuisite software
- is installed and you have a generic Tsugi server ready for configuration.  
+ is installed and you have a generic Sakai server ready for configuration.  
 
 Your Ubuntu disk is ready to backed up as
 a pre-configuration snapshot.  In a sense your manualy built running Ubuntu image
-is equivalent to either the `tsugi_dev` or `tsugi_prod` docker images if you 
+is equivalent to either the `sakai_dev` or `sakai_prod` docker images if you 
 have done the Docker builds.
 
 * If you are doing this on your own server - it is a good time to take a backup
@@ -75,7 +75,7 @@ have done the Docker builds.
 snapshot in case you want to do additional installations of your software or add
 your own stuff.  The snapshot command is:
 
-        docker commit d6c36062e38b tsugi:preconfig
+        docker commit d6c36062e38b sakai:preconfig
 
 * If you are an an Amazon EC2 node, you can stop the instance and make copy of it
 to create a pre-configured AMI.
@@ -86,7 +86,7 @@ Adding Your Custom Software
 ---------------------------
 
 Let say you want to make a custom image with software that is beyond a stock
-Tsugi install.  You would be well served to break that setup into two phases:
+Sakai install.  You would be well served to break that setup into two phases:
 
 * Installation
 
@@ -98,8 +98,8 @@ shell script that handles each of the steps.  Reproducability is nice.
 Understanding Configuration
 ---------------------------
 
-It is important to note that configuring a Tsugi server is a one time operation.
-Once the configuration is complete Tsugi, Apache, MySQL (if installed) are fully
+It is important to note that configuring a Sakai server is a one time operation.
+Once the configuration is complete Sakai, NginX (if installed) are fully
 configured and set to auto-start at each boot.  The configure process is only needed
 at first boot and before first use.  As a matter of fact the configure the 
 configuration scripts create files in `/usr/local/bin` after they run successfully
@@ -134,9 +134,9 @@ See the `ami` folder for the more complex AMI setup.
 Developer setup is prettty simple because there are no external servers:
 
     cd /root
-    cp tsugi-build/ubuntu/ubuntu-env-dev.sh ubuntu-env.sh
+    cp sakai-build/ubuntu/ubuntu-env-dev.sh ubuntu-env.sh
     source ubuntu-env.sh
-    bash /usr/local/bin/tsugi-dev-configure.sh return
+    bash /usr/local/bin/sakai-dev-configure.sh return
 
 Configure a Demo Server
 ------------------------
@@ -145,12 +145,12 @@ Demo setup requires that you edit your configuration but there are no external
 servers needed:
 
     cd /root
-    cp tsugi-build/ubuntu/ubuntu-demo-dev.sh ubuntu-env.sh
+    cp sakai-build/ubuntu/ubuntu-demo-dev.sh ubuntu-env.sh
 
     # Edit the ubuntu-env.sh and put your values in it
 
     source ubuntu-env.sh
-    bash /usr/local/bin/tsugi-dev-configure.sh return
+    bash /usr/local/bin/sakai-dev-configure.sh return
 
 It is correct that the configure script for both dev and demo is 'dev'.  The only
 difference is the configuration.
@@ -169,12 +169,12 @@ So you need to set up all the needed pre-requisites and add them to the configur
 The general outline is:
 
     cd /root
-    cp tsugi-build/ubuntu/ubuntu-prod-dev.sh ubuntu-env.sh
+    cp sakai-build/ubuntu/ubuntu-prod-dev.sh ubuntu-env.sh
 
     # Edit the ubuntu-env.sh and put your values in it
 
     source ubuntu-env.sh
-    bash /usr/local/bin/tsugi-prod-configure.sh return
+    bash /usr/local/bin/sakai-prod-configure.sh return
 
 This pattern of hand-minting an ubuntu server and hand-minting all of the pre-requisites
 is __difficult__ - If you are running production and want more of a cookie-cutter approach
@@ -186,7 +186,7 @@ Getting a LetsEncrypt Certificate
 
 If you are running a demo or production server, you will want a SSL certificate.
 
-    root@ip-172-31-2-126:/root/tsugi-build# certbot --apache
+    root@ip-172-31-2-126:/root/sakai-build# certbot --apache
     Saving debug log to /var/log/letsencrypt/letsencrypt.log
     Plugins selected: Authenticator apache, Installer apache
     Enter email address (used for urgent renewal and security notices) (Enter 'c' to

@@ -38,6 +38,8 @@ tar -xf /root/apache-tomcat-$TOMCAT_VERSION.tar.gz -C /opt/tomcat
 chown -R tomcat: /opt/tomcat
 chmod +x /opt/tomcat/latest/bin/*.sh
 
+apt install nginx
+
 echo ======= Installing Node and Friends
 apt-get install -y nodejs
 node --version
@@ -61,6 +63,8 @@ echo -n "npm " ; npm --version
 php --version
 mysql --version
 lsb_release -a
+java --version
+javac --version
 
 # Cleanup is outside this file
 
