@@ -3,7 +3,7 @@
 while : 
 do
   echo Monitoring Tomcat Logs `date`
-  tail -F /var/log/apache2/access.log /var/log/apache2/error.log
+  tail -F /opt/tomcat/catalina/logs/catalina.out
   echo Tomcat Log Monitoring Failed `date`
   echo Waiting to re-try log monitoring...
   sleep 120

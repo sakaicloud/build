@@ -1,4 +1,4 @@
-Docker Tsugi
+Docker Sakai
 ------------
 
 These are some highly stylized Docker files so that the scripts
@@ -8,7 +8,7 @@ and Dockerfiles can be reused in an three environments:
 docker swarm, or Kubernetes
 
 * Scripts that can be run inside of a bare ubuntu distribution
-to prepare the instance to run Tsugi.
+to prepare the instance to run Sakai.
 
 * Scripts the prepare an AMI image for development and production
 that can be uses to mint EC2 nodes and/or an Amazon autoscaling
@@ -16,7 +16,7 @@ group
 
 In order to accomplish those reuses, our Dockerfiles are kept to
 an absolute minimum and all of the clever work is done in the 
-`tusgi-prepare`, `tsugi-software`, and `tsugi-startup` scripts.
+`sakai-prepare`, `sakai-software`, and `sakai-startup` scripts.
 
 The order of the steps is:
 

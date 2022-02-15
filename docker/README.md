@@ -9,14 +9,23 @@ that uses Aurora and EFS.  Or the nightly servers somewhere in-between.
 For now we build three images - the `sakai_dev:latest` image is a developer instance
 with all of the pieces running on one server.
 
-    $ docker images    (make sure they all build)
+    $ bash build.sh
 
-    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    sakai_base          latest              b7199f92080c        3 minutes ago       585MB
+    $ docker images
+    REPOSITORY    TAG       IMAGE ID       CREATED              SIZE
+    sakai_dev     latest    879bd23549af   About a minute ago   2.24GB
+    sakai_mysql   latest    9caa50b6f148   2 minutes ago        2GB
+    sakai_base    latest    f22565fcecf4   3 minutes ago        1.72GB
 
     $ docker run -p 8080:8080 --name sakai_base -dit sakai_base:latest
-    $ docker exec -it sakai_base bash
+    $ docker logs 73c...e21
     $ docker attach 73c...e21
+    $ docker exec -it sakai_base bash
+
+    $ docker run -p 8080:8080 -p 3306:3306 --name sakai_mysql -dit sakai_mysql:latest
+    $ docker logs 73c...e21
+    $ docker attach 73c...e21
+    $ docker exec -it sakai_mysql bash
 
 Old:
 

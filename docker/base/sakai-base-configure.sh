@@ -13,7 +13,7 @@ if [ ! -f "/root/ubuntu-env.sh" ] ; then
     env | sort | grep '^SAKAI' | sed 's/^/export /' >>  /root/ubuntu-env.sh
     env | sort | grep '^POSTFIX' | sed 's/^/export /' >>  /root/ubuntu-env.sh
     env | sort | grep '^MYSQL' | sed 's/^/export /' >>  /root/ubuntu-env.sh
-    env | sort > /root/tsugi-env-raw-dump
+    env | sort > /root/sakai-env-raw-dump
 fi
 
 # TODO: More stuff here
