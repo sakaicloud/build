@@ -59,13 +59,12 @@ EOF
 
 fi
 
-echo "NOT Installing phpMyAdmin"
-## echo "Installing phpMyAdmin"
-## rm -rf /var/www/html/phpMyAdmin
-## cd /root
-## unzip phpMyAdmin-5.1.1-all-languages.zip
-## mv phpMyAdmin-5.1.1-all-languages /var/www/html/phpMyAdmin
-## rm phpMyAdmin-5.1.1-all-languages.zip
+echo "Installing phpMyAdmin"
+rm -rf /var/www/html/phpMyAdmin
+cd /root
+unzip -q phpMyAdmin-5.1.1-all-languages.zip
+mv phpMyAdmin-5.1.1-all-languages /var/www/html/phpMyAdmin
+rm phpMyAdmin-5.1.1-all-languages.zip
 
 # if COMPLETE
 fi
