@@ -1,3 +1,5 @@
+#! /bin/bash 
+
 echo "Running Base Configure"
 
 COMPLETE=/usr/local/bin/sakai-base-complete
@@ -15,6 +17,11 @@ if [ ! -f "/root/ubuntu-env.sh" ] ; then
 fi
 
 # TODO: More stuff here
+
+# if COMPLETE
+fi
+
+touch $COMPLETE
 
 echo "Environment variables:"
 env | sort

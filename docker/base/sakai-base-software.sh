@@ -30,6 +30,14 @@ sdk install maven 3.8.1
 
 source "/root/.sdkman/bin/sdkman-init.sh"
 
+TOMCAT_VERSION=9.0.21
+useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+cd /root
+curl -O http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_VERSION:0:1}/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
+tar -xf /root/apache-tomcat-$TOMCAT_VERSION.tar.gz -C /opt/tomcat
+chown -R tomcat: /opt/tomcat
+chmod +x /opt/tomcat/latest/bin/*.sh
+
 echo ======= Installing Node and Friends
 apt-get install -y nodejs
 node --version
