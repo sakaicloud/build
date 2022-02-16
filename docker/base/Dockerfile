@@ -14,6 +14,7 @@ FROM ubuntu:20.04
 COPY sakai-base-software.sh /usr/local/bin/
 COPY sakai-base-prepare.sh /usr/local/bin/
 COPY sakai-base-configure.sh /usr/local/bin/
+COPY compile-sakai.sh /usr/local/bin
 
 # Install.
 RUN bash /usr/local/bin/sakai-base-software.sh
